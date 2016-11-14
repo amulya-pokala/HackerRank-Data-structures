@@ -1,0 +1,41 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    long t,l,p;
+    cin>>t;
+    stack<long> s,s1;
+     s1.push(0);
+    for(int i=0;i<t;i++)
+    {
+        
+        cin>>p;
+      
+          if(p==1)
+            {
+                cin>>l;
+                s.push(l);
+                if(l>=s1.top()) s1.push(l);
+            }
+          else if(p==2)
+            {
+                
+                if(s.top()==s1.top()) s1.pop();
+                s.pop();
+            }
+            else
+            {
+                cout<<s1.top()<<endl;
+               
+            }
+        
+    }
+    return 0;
+}

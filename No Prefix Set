@@ -1,0 +1,80 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+#define	ALPHABET_SIZE	26
+typedef struct tnode TNode;
+    struct tnode
+{
+	bool isEOW;
+	TNode *next[ALPHABET_SIZE];
+};
+
+TNode *createTrieNode()
+{
+        TNode* tnode1=(TNode*)malloc(sizeof(TNode));
+        for(int i=0;i<26;i++) tnode1->next[i]=NULL;
+        tnode1->isEOW=false;
+        return tnode1;
+}
+
+bool insertWordInTrie(TNode *root, char *word)
+{
+    TNode* temp=(TNode*)malloc(sizeof(tnode));
+    temp=root;
+    for(int i=0;word[i]!='\0';i++)
+    {
+        int num=word[i]-'a';
+        if(temp->next[num]==NULL)
+            temp->next[num]=createTrieNode();
+        temp=temp->next[num];
+    }
+    if(temp->isEOW==true) return false;
+    temp->isEOW=true;
+    return true;
+
+}
+int findWordsInTrie(TNode *root,char* word,int len)
+    {
+        
+    for(int i=0;i<=strlen(word);i++)
+        {
+        if((i!=strlen(word))&&root->isEOW==1) return 0;
+        else if(i==strlen(word))
+        {
+            for(int j=0;j<26;j++)
+            {
+               if(root->next[j]!=NULL) return 0; 
+            }
+        }
+        
+        else if(root->next[word[i]-'a']!=NULL)
+                {
+
+                     root=root->next[word[i]-'a'];
+                    if(root->isEOW!=1) len++;
+                }
+        }
+   
+    return 1;
+}
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+    int t;
+    cin>>t;
+    TNode *root = createTrieNode();
+    for(int i=0;i<t;i++)
+        {
+        char s[100000];
+        cin>>s;
+        if(!insertWordInTrie(root,s)){ printf("BAD SET\n"); cout<<s;return 0;}
+        int l=findWordsInTrie(root,s,0);
+        if(l==0) {printf("BAD SET\n");cout<<s;return 0;}
+       
+    }
+    printf("GOOD SET\n");
+    return 0;
+}

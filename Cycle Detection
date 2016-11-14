@@ -1,0 +1,28 @@
+/*
+  Detect loop in a linked list 
+  List could be empty also
+  Node is defined as 
+  struct Node
+  {
+     int data;
+     struct Node *next;
+  }
+*/
+int HasCycle(Node* head)
+{
+   // Complete this function
+   // Do not write the main method
+    if(head==NULL) return 0;
+    Node* slow=head;
+    Node* fast=head->next;
+    while(fast!=slow)
+        {
+           if(fast->next==NULL) return 0;
+           fast=fast->next->next;
+            slow=slow->next;
+            if(slow==fast) return 1;
+        
+            
+    }
+    return 0;
+}

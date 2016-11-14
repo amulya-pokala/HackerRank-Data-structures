@@ -1,0 +1,27 @@
+/*
+  Compare two linked lists A and B
+  Return 1 if they are identical and 0 if they are not. 
+  Node is defined as 
+  struct Node
+  {
+     int data;
+     struct Node *next;
+  }
+*/
+int CompareLists(Node *headA, Node* headB)
+{
+    Node *tempa,*tempb;
+    tempa=headA;
+    tempb=headB;
+    while(tempa!=NULL&&tempb!=NULL)
+        {
+        if(tempa->data==tempb->data)
+            {
+            tempa=tempa->next;
+            tempb=tempb->next;
+        }
+        else return 0;
+    }
+    if(tempa==NULL&&tempb==NULL) return 1;
+    return 0;
+}

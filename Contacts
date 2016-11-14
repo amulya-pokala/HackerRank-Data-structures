@@ -1,0 +1,92 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <cstring>
+#define	ALPHABET_SIZE	26
+
+using namespace std;
+typedef struct tnode TNode;
+//char WORD[10000];
+long long count1;
+struct tnode
+{
+	bool isEOW;
+    long c;
+	TNode *next[ALPHABET_SIZE];
+};
+TNode *createTrieNode()
+{
+        TNode* tnode1=(TNode*)malloc(sizeof(TNode));
+        for(int i=0;i<26;i++) tnode1->next[i]=NULL;
+        tnode1->isEOW=false;
+        tnode1->c=0;
+        return tnode1;
+}
+
+void insertWordInTrie(TNode *root, char *word)
+{
+    TNode* temp=(TNode*)malloc(sizeof(tnode));
+    temp=root;
+    for(int i=0;word[i]!='\0';i++)
+    {
+        int num=word[i]-'a';
+            
+        if(temp->next[num]==NULL)
+            temp->next[num]=createTrieNode();
+        temp=temp->next[num];
+        (temp->c)++;
+    }
+    temp->isEOW=true;
+}
+long printPrefix(TNode *root,char* prefix)
+{ 
+    for(int i=0;prefix[i]!='\0';i++)
+    {  
+        if(root==NULL) return 0;
+           
+        if(root!=NULL)
+        root=root->next[prefix[i]-'a'];
+
+    }
+    if(root==NULL) return 0;
+    return root->c;
+}
+/*void printWordsInTrie(TNode *root)
+{
+
+       if(root==NULL) return;
+       if(root->isEOW==true)
+        {
+            printf("%s\n",WORD);
+        }
+
+        for(int i=0;i<26;i++)
+        {
+            if(root->next[i]!=NULL)
+                {
+
+                    WORD[t]='a'+i;
+                    t++;
+                    WORD[t]='\0';
+                    printWordsInTrie(root->next[i]);
+                }
+        }
+        t--;
+}*/
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    long p;
+    cin>>p;
+    TNode *root = createTrieNode();
+    for(long k=0;k<p;k++)
+    {
+        char s[100],s1[100];
+        cin>>s>>s1;
+        if((strcmp(s,"add"))==0) insertWordInTrie(root,s1);
+       else if((strcmp(s,"find"))==0) printf("%lld\n",printPrefix(root,s1));
+    }
+    
+    return 0;
+}
